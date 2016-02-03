@@ -99,10 +99,10 @@ Plugin.prototype.onMessage = function(message){
 Plugin.prototype.runScriptFromPath = function(path){
   var self = this;
 
-  PS = new shell(path);
+  var PS = new shell(path);
 
   PS.on('output', function(data){
-      console.log(data);
+      debug(data);
       self.emit('message', {devices: ['*'], payload: data});
   });
   PS.on('end', function(code) {
@@ -115,15 +115,21 @@ Plugin.prototype.runWithArgs = function(path, args){
   var multi_arg;
 
   args.forEach(function(o) {
-    multi_arg = multi_arg + ' "' + o + '"';
+    if(multi_arg == undefined){
+      multi_arg = ' "' + o + '"';
+    }else{
+      multi_arg = multi_arg + ' "' + o + '"';
+    }
   });
 
   path = path + multi_arg;
 
-  PS = new shell(path);
+  debug(path);
+
+  var PS = new shell(path);
 
   PS.on('output', function(data){
-      console.log(data);
+      debug(data);
       self.emit('message', {devices: ['*'], payload: data});
   });
   PS.on('end', function(code) {
@@ -136,7 +142,7 @@ Plugin.prototype.saveScript = function(payload){
 
   fs.writeFile("./script.ps1", payload.script, function(err) {
       if(err) {
-          return console.log(err);
+          return debug(err);
       }
       if(payload.useArgs == false){
         self.runScriptFromPath("./script.ps1");
