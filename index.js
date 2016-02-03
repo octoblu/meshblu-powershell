@@ -17,7 +17,7 @@ var MESSAGE_SCHEMA = {
     },
     useArgs: {
       type: 'boolean',
-      description: 'Just use param ( ) instead of Read-Host in your script'
+      description: 'Just use param ( ) instead of Read-Host in your script',
       required: true,
       default: false
     },
