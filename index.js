@@ -25,7 +25,7 @@ var MESSAGE_SCHEMA = {
       type: 'array',
       items: {
         type: 'string'
-      }
+      },
       required: false
     }
   }
@@ -33,27 +33,27 @@ var MESSAGE_SCHEMA = {
 
 var ACTION_MAP = [
   {
-    'value': 'usePath'
+    'value': 'usePath',
     'name': 'Run Script from Path'
   },
   {
-    'value': 'send'
+    'value': 'send',
     'name': 'Send Script and Run'
   }
 ]
 
 var MESSAGE_FORM_SCHEMA = [
   {
-    'key': 'action'
-    'type': 'select'
+    'key': 'action',
+    'type': 'select',
     'titleMap': ACTION_MAP
   },
   {
-    'key': 'path'
+    'key': 'path',
     'condition': "model.action == 'usePath'"
   },
   {
-    'key': 'script'
+    'key': 'script',
     'condition': "model.action == 'send'"
   },
   {
@@ -68,7 +68,8 @@ var OPTIONS_SCHEMA = {
   type: 'object',
   properties: {
 
-  };
+  }
+};
 
 function Plugin(){
   var self = this;
@@ -105,19 +106,19 @@ Plugin.prototype.runScriptFromPath = function(path){
       self.emit('message', {devices: ['*'], payload: data});
   });
   PS.on('end', function(code) {
-    self.emit('message', {devices: ['*'], payload: { script-end: code}});
+    self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
   });
 };
 
 Plugin.prototype.runWithArgs = function(path, args){
   var self = this;
-  var multi-arg;
+  var multi_arg;
 
   args.forEach(function(o) {
-    multi-arg = multi-arg + ' "' + o + '"';
+    multi_arg = multi_arg + ' "' + o + '"';
   });
 
-  path = path + multi-arg;
+  path = path + multi_arg;
 
   PS = new shell(path);
 
@@ -126,7 +127,7 @@ Plugin.prototype.runWithArgs = function(path, args){
       self.emit('message', {devices: ['*'], payload: data});
   });
   PS.on('end', function(code) {
-    self.emit('message', {devices: ['*'], payload: { script-end: code}});
+    self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
   });
 };
 
