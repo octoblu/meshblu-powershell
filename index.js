@@ -101,13 +101,16 @@ Plugin.prototype.runScriptFromPath = function(path){
 
   var PS = new shell(path);
 
-  PS.on('output', function(data){
-      debug(data);
-      self.emit('message', {devices: ['*'], payload: data});
-  });
-  PS.on('end', function(code) {
-    self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
-  });
+   var psOutput = "";
+
+   PS.on('output', function(data){
+       psOutput = psOutput + data;
+   });
+   PS.on('end', function(code) {
+       debug(psOutput);
+       self.emit('message', {devices: ['*'], payload: psOutput});
+       self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
+   });
 };
 
 Plugin.prototype.runWithArgs = function(path, args){
@@ -128,13 +131,16 @@ Plugin.prototype.runWithArgs = function(path, args){
 
   var PS = new shell(path);
 
-  PS.on('output', function(data){
-      debug(data);
-      self.emit('message', {devices: ['*'], payload: data});
-  });
-  PS.on('end', function(code) {
-    self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
-  });
+   var psOutput = "";
+   
+   PS.on('output', function(data){
+       psOutput = psOutput + data;
+   });
+   PS.on('end', function(code) {
+       debug(psOutput);
+       self.emit('message', {devices: ['*'], payload: psOutput});
+       self.emit('message', {devices: ['*'], payload: { 'script-end': code}});
+   });
 };
 
 Plugin.prototype.saveScript = function(payload){
