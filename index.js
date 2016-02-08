@@ -16,12 +16,13 @@ var MESSAGE_SCHEMA = {
       type: 'string'
     },
     useArgs: {
+      title: 'Use Params?',
       type: 'boolean',
-      description: 'Just use param ( ) instead of Read-Host in your script',
       required: true,
       default: false
     },
     args: {
+      title: 'Params',
       type: 'array',
       items: {
         type: 'string'
@@ -38,7 +39,7 @@ var ACTION_MAP = [
   },
   {
     'value': 'send',
-    'name': 'Send Script and Run'
+    'name': 'Send ScriptBlock and Run'
   }
 ]
 
@@ -132,7 +133,7 @@ Plugin.prototype.runWithArgs = function(path, args){
   var PS = new shell(path);
 
    var psOutput = "";
-   
+
    PS.on('output', function(data){
        psOutput = psOutput + data;
    });
